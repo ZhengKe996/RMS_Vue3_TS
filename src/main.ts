@@ -13,19 +13,24 @@ app.use(globalRegister)
 app.use(router)
 app.use(store)
 
+// ownRequest.request({
+//   url: '/home/multidata',
+//   method: 'GET',
+//   interceptors: {
+//     requestInterceptor: (config) => {
+//       console.log('单独请求的config')
+//       return config
+//     },
+//     responseInterceptor: (res) => {
+//       console.log('单独请求的res')
+//       return res
+//     }
+//   }
+// })
+
 ownRequest.request({
   url: '/home/multidata',
-  method: 'GET',
-  interceptors: {
-    requestInterceptor: (config) => {
-      console.log('单独请求的config')
-      return config
-    },
-    responseInterceptor: (res) => {
-      console.log('单独请求的res')
-      return res
-    }
-  }
+  method: 'GET'
 })
 
 app.mount('#app')
