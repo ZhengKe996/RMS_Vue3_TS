@@ -28,9 +28,21 @@ app.use(store)
 //   }
 // })
 
-ownRequest.request({
-  url: '/home/multidata',
-  method: 'GET'
-})
+/**
+ * 请求的数据类型，会传入内部定义的接口
+ */
+interface DataType {
+  data: any
+}
+
+ownRequest
+  .request<DataType>({
+    url: '/home/multidata',
+    method: 'GET'
+    // showLoading: false
+  })
+  .then((res) => {
+    console.log(res)
+  })
 
 app.mount('#app')

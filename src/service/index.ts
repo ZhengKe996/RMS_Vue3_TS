@@ -24,7 +24,7 @@ const ownRequest = new OWNRequest({
     },
     responseInterceptor: (res: any) => {
       console.log('单独实例————响应成功的拦截')
-      return res.data
+      return res
     },
     responseInterceptorCatch: (error: any) => {
       console.log('单独实例————响应失败的拦截')
