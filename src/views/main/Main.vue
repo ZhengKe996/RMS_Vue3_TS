@@ -1,5 +1,4 @@
 <template>
-  <h2>{{ $store.state.name }}</h2>
   <div>Main</div>
 </template>
 

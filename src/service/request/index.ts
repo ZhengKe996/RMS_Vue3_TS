@@ -35,8 +35,6 @@ class OWNRequest {
     /* 添加全局的拦截器 */
     this.instance.interceptors.request.use(
       (config) => {
-        console.log('全体实例拦截器————请求成功拦截')
-
         if (this.showLoading) {
           this.loading = ElLoading.service({
             lock: true,
@@ -48,33 +46,18 @@ class OWNRequest {
         return config
       },
       (error) => {
-        console.log('全体实例拦截器————请求失败拦截')
         return error
       }
     )
 
     this.instance.interceptors.response.use(
       (res) => {
-        console.log('全体实例拦截器————响应成功拦截')
-
         // 移除loading
         this.loading?.close()
 
-        /**
-         * 例子：
-         *  某些请求看起来是成功的，但什么数据都没有返回。这时需要判断 是否有错误代码
-         */
-
-        const data = res.data
-        if (data.returnCode === '-1001') {
-          console.log('请求失败，错误信息')
-        } else {
-          return data
-        }
+        return res
       },
       (error) => {
-        console.log('全体实例拦截器————响应失败拦截')
-
         // 移除loading
         this.loading?.close()
 
