@@ -6,7 +6,7 @@ import loaclCache from '@/utils/cache'
 const routes: RouteRecordRaw[] = [
   {
     path: '/',
-    redirect: '/mian'
+    redirect: '/main'
   },
   {
     path: '/login',

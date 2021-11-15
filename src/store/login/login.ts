@@ -61,7 +61,7 @@ const loginModule: Module<ILoginState, IRootState> = {
       router.push('/main')
     },
     loadLocalLogin({ commit }) {
-      const token = loaclCache.getCache('token')
+      const token: string = loaclCache.getCache('token')
       if (token) {
         commit('changeToken', token)
       }
