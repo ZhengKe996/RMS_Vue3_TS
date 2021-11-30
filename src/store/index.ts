@@ -2,16 +2,51 @@ import { createStore, Store, useStore as useVuexStore } from 'vuex'
 import type { IRootState, IStoreType } from './types'
 
 import loginModule from './login/login'
+import mainModule from './main/main'
+import dashboardModule from './main/dashboard'
+
+import { getPageListData } from '@/service/main/main'
 
 const store = createStore<IRootState>({
   state: () => {
-    return {}
+    return {
+      entireDepartment: [],
+      entireRole: [],
+      entireMenu: []
+    }
   },
-  mutations: {},
+  mutations: {
+    changeEntireDepartment(state, list) {
+      state.entireDepartment = list
+    },
+    changeEntireRole(state, list) {
+      state.entireRole = list
+    },
+    changeEntireMenu(state, list) {
+      state.entireMenu = list
+    }
+  },
   getters: {},
-  actions: {},
+  actions: {
+    async getInitialDataAction({ commit }) {
+      // 获取部门/角色/菜单列表
+      const departmentResult = await getPageListData('/department/list', { offset: 0, size: 100 })
+      const { list: departmentList } = departmentResult.data
+      commit('changeEntireDepartment', departmentList)
+
+      const roleResult = await getPageListData('/role/list', { offset: 0, size: 100 })
+      const { list: roleList } = roleResult.data
+      commit('changeEntireRole', roleList)
+
+      const menuResult = await getPageListData('/menu/list', {})
+      const { list: menuList } = menuResult.data
+      commit('changeEntireMenu', menuList)
+    }
+  },
   modules: {
-    loginModule
+    loginModule,
+    mainModule,
+    dashboardModule
   }
 })
 export function setupStore() {

@@ -5,7 +5,8 @@
       <el-tab-pane name="account">
         <template #label>
           <span>
-            <el-icon><user /></el-icon>账号登录
+            <el-icon style="vertical-align: middle; margin-right: 3px"><user /></el-icon>
+            <span style="vertical-align: middle">账号登录</span>
           </span>
         </template>
         <login-account ref="accountRef" />
@@ -14,7 +15,8 @@
       <el-tab-pane name="phone">
         <template #label>
           <span>
-            <el-icon><iphone /></el-icon>手机登录
+            <el-icon style="vertical-align: middle; margin-right: 3px"><iphone /></el-icon>
+            <span style="vertical-align: middle">手机登录</span>
           </span>
         </template>
         <login-phone ref="phoneRef" />

@@ -12,6 +12,7 @@ import type { IAccount, IUserInfo } from '@/service/login/type'
 import { accountLoginRequest, requestUserInfoById, requestUserMenusByRoleId } from '@/service/login/login'
 import loaclCache from '@/utils/cache'
 import router from '@/router'
+import { mapMenusToRoutes, mapMenusToPermissions } from '@/utils/map-menus'
 
 const loginModule: Module<ILoginState, IRootState> = {
   namespaced: true,
@@ -19,7 +20,8 @@ const loginModule: Module<ILoginState, IRootState> = {
     return {
       token: '',
       userInfo: {},
-      userMenus: []
+      userMenus: [],
+      permissions: []
     }
   },
   mutations: {
@@ -31,17 +33,31 @@ const loginModule: Module<ILoginState, IRootState> = {
     },
     changeUserMenus(state, userMenus: any) {
       state.userMenus = userMenus
+      // userMenus => routes
+      const routes = mapMenusToRoutes(userMenus)
+
+      // 将 routes => router.main.children
+      routes.forEach((route) => {
+        router.addRoute('main', route)
+      })
+      // 获取菜单操作权限
+      const permissions = mapMenusToPermissions(userMenus)
+      state.permissions = permissions
     }
   },
   getters: {},
   actions: {
     // 登录逻辑
-    async accountLoginAction({ commit }, payload: IAccount) {
+    async accountLoginAction({ commit, dispatch }, payload: IAccount) {
       const loginResult = await accountLoginRequest(payload)
+      // console.log(loginResult) // 0 ok  400 no
 
       const { id, token } = loginResult.data
       commit('changeToken', token)
       loaclCache.setCache('token', token)
+
+      // 发生初始化的网络请求（完整的角色role/部门department）调用根写法
+      dispatch('getInitialDataAction', null, { root: true })
 
       // 请求用户信息
       const userInfoResult = await requestUserInfoById(id)
@@ -60,11 +76,14 @@ const loginModule: Module<ILoginState, IRootState> = {
       // 跳转到首页
       router.push('/main')
     },
-    loadLocalLogin({ commit }) {
+    loadLocalLogin({ commit, dispatch }) {
       const token: string = loaclCache.getCache('token')
       if (token) {
         commit('changeToken', token)
       }
+
+      // 发生初始化的网络请求（完整的角色role/部门department）调用根写法
+      dispatch('getInitialDataAction', null, { root: true })
 
       const userInfo = loaclCache.getCache('userInfo')
       if (userInfo) {

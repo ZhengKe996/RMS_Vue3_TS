@@ -5,6 +5,7 @@
  *          localstorage: 始终有效
  *          sessionstorage: 关闭浏览器窗口失效
  */
+
 class LoaclCache {
   setCache(key: string, value: any) {
     window.localStorage.setItem(key, JSON.stringify(value))

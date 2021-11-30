@@ -13,8 +13,8 @@ import { globalRegister } from './global' // 引入抽取出的第三方库
 const app = createApp(App)
 
 app.use(globalRegister)
-app.use(router)
 app.use(store)
 setupStore()
+app.use(router)
 
 app.mount('#app')

@@ -2,6 +2,7 @@ import type { RouteRecordRaw } from 'vue-router' // 引入vue-router中的类型
 
 import { createRouter, createWebHashHistory } from 'vue-router'
 import loaclCache from '@/utils/cache'
+import { fitstMenu } from '@/utils/map-menus'
 
 const routes: RouteRecordRaw[] = [
   {
@@ -10,11 +11,19 @@ const routes: RouteRecordRaw[] = [
   },
   {
     path: '/login',
+    name: 'login',
     component: () => import('@/views/login/Login.vue')
   },
   {
     path: '/main',
+    name: 'main',
     component: () => import('@/views/main/Main.vue')
+    // 子路由 根据 userMenus 决定 动态注册
+  },
+  {
+    path: '/:pathMatch(.*)*',
+    name: 'not-found',
+    component: () => import('@/views/not-found/Not-found.vue')
   }
 ]
 
@@ -32,6 +41,10 @@ router.beforeEach((to) => {
     if (!token) {
       return '/login'
     }
+  }
+
+  if (to.path === '/main') {
+    return fitstMenu.url
   }
 })
 

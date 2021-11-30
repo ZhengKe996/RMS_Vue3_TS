@@ -42,8 +42,3 @@ export interface IUserInfo {
   role: Role
   department: Department
 }
-
-export interface IDataType<Type = any> {
-  code: number
-  data: Type
-}

@@ -73,7 +73,7 @@ class OWNRequest {
     )
   }
 
-  request<Type>(config: OWNRequestConfig<Type>): Promise<Type> {
+  request<Type = any>(config: OWNRequestConfig<Type>): Promise<Type> {
     return new Promise((resolve, reject) => {
       // 单个请求对请求config进行的处理
       if (config.interceptors?.requestInterceptor) {
@@ -107,19 +107,22 @@ class OWNRequest {
     })
   }
 
-  get<Type>(config: OWNRequestConfig<Type>): Promise<Type> {
+  get<Type = any>(config: OWNRequestConfig<Type>): Promise<Type> {
     return this.request<Type>({ ...config, method: 'GET' })
   }
 
-  post<Type>(config: OWNRequestConfig<Type>): Promise<Type> {
+  post<Type = any>(config: OWNRequestConfig<Type>): Promise<Type> {
     return this.request<Type>({ ...config, method: 'POST' })
   }
 
-  put<Type>(config: OWNRequestConfig<Type>): Promise<Type> {
+  put<Type = any>(config: OWNRequestConfig<Type>): Promise<Type> {
     return this.request<Type>({ ...config, method: 'PUT' })
   }
 
-  delete<Type>(config: OWNRequestConfig<Type>): Promise<Type> {
+  patch<Type = any>(config: OWNRequestConfig<Type>): Promise<Type> {
+    return this.request<Type>({ ...config, method: 'PATCH' })
+  }
+  delete<Type = any>(config: OWNRequestConfig<Type>): Promise<Type> {
     return this.request<Type>({ ...config, method: 'DELETE' })
   }
 }
