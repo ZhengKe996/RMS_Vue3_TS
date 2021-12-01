@@ -29,7 +29,7 @@
         </el-table-column>
       </template>
     </el-table>
-    <div class="footer" v-if="listCount !== 0">
+    <div class="footer">
       <slot name="footer">
         <el-pagination
           :current-page="page.currentPage"

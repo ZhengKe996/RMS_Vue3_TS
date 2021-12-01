@@ -33,7 +33,7 @@ export default defineComponent({
       emit('foldChange', isFold.value)
     }
 
-    // breadcrumbs
+    // 面包屑组件
     const store = useStore()
     const route = useRoute()
 

@@ -2,8 +2,8 @@
   <div class="content">
     <own-table :listData="dataList" :listCount="dataCount" v-model:page="pageInfo" v-bind="contentTableConfig">
       <!-- 头部中插槽的内容 -->
-      <template #headerHandler>
-        <el-button v-if="isCreate" size="mini" type="primary" @click="handleNewClick">新建用户</el-button>
+      <template v-if="isShow" #headerHandler>
+        <el-button v-if="isCreate" size="mini" type="primary" @click="handleNewClick"> 新建数据 </el-button>
       </template>
 
       <!-- 列表中静态插槽的内容 -->
@@ -35,6 +35,7 @@
 <script lang="ts">
 import { defineComponent, computed, ref, watch } from 'vue'
 import ownTable from '@/base-ui/table'
+import { ownDeleteMessage } from '@/base-ui/delete-message'
 
 import { useStore } from '@/store'
 import { usePermission } from '@/hooks/usePermission'
@@ -77,11 +78,16 @@ export default defineComponent({
     }
     getPageData()
 
-    // 表格的数据
-    const dataList = computed(() => store.getters[`mainModule/pageListData`](props.pageName))
-    const dataCount = computed(() => store.getters[`mainModule/pageListCount`](props.pageName))
+    // 是否显示新建按钮
+    const isShow = ref(true)
+    if (props.pageName === 'menu') isShow.value = false
+    else isShow.value = true
 
-    // 获取其他的动态插槽（除掉固定插槽）
+    // 表格的数据
+    const dataList = computed(() => store.getters[`mainModule/pageListData`](props.pageName)) ?? []
+    const dataCount = computed(() => store.getters[`mainModule/pageListCount`](props.pageName)) ?? 0
+
+    // 获取其他的动态插槽（去掉固定插槽）
     const otherPropSlots = props.contentTableConfig?.propList.filter((item: any) => {
       if (item.slotName === 'createAt') return false
       if (item.slotName === 'updateAt') return false
@@ -91,12 +97,17 @@ export default defineComponent({
 
     // 删除/修改/新增 操作
     const handleDeleteClick = (item: any) => {
-      store.dispatch('mainModule/deletePageDataAction', {
-        pageName: props.pageName,
-        id: item.id,
-        ueryInfo: {
-          offset: (pageInfo.value.currentPage - 1) * pageInfo.value.pageSize,
-          size: pageInfo.value.pageSize
+      ownDeleteMessage().then((res) => {
+        // console.log(res, '用户点击删除按钮的反馈')
+        if (res) {
+          store.dispatch('mainModule/deletePageDataAction', {
+            pageName: props.pageName,
+            id: item.id,
+            ueryInfo: {
+              offset: (pageInfo.value.currentPage - 1) * pageInfo.value.pageSize,
+              size: pageInfo.value.pageSize
+            }
+          })
         }
       })
     }
@@ -120,7 +131,8 @@ export default defineComponent({
       isDelete,
       handleDeleteClick,
       handleNewClick,
-      handleEditClick
+      handleEditClick,
+      isShow
     }
   },
   components: { ownTable }

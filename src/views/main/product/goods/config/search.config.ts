@@ -5,35 +5,33 @@ export const searchFormConfig: IForm = {
     {
       field: 'name',
       type: 'input',
-      label: '用户名',
-      placeholder: '请输入用户名'
+      label: '商品名称',
+      placeholder: '请输入商品名称',
+      rules: []
     },
     {
-      field: 'realname',
+      field: 'address',
       type: 'input',
-      label: '真实姓名',
-      placeholder: '请输入真实姓名'
+      label: '商品地址',
+      placeholder: '请输入商品地址',
+      rules: []
     },
     {
-      field: 'cellphone',
-      type: 'input',
-      label: '电话号码',
-      placeholder: '请输入电话号码'
-    },
-    {
-      field: 'state',
+      field: 'status',
       type: 'select',
       label: '状态',
       placeholder: '请选择状态',
+      rules: [],
       options: [
-        { title: '在线', value: '1' },
-        { title: '离线', value: '0' }
+        { title: '在售', value: 1 },
+        { title: '下架', value: 0 }
       ]
     },
     {
       field: 'createAt',
       type: 'datepicker',
       label: '创建时间',
+      rules: [],
       otherOptions: {
         startPlaceholder: '开始时间',
         endPlaceholder: '结束时间',
@@ -41,8 +39,7 @@ export const searchFormConfig: IForm = {
       }
     }
   ],
-  labelWidth: '80px',
-  itemStyle: {
-    padding: '8px 40px'
-  }
+  labelWidth: '100px',
+  itemStyle: { padding: '10px 40px' },
+  colLayout: { span: 8 }
 }

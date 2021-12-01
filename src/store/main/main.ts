@@ -16,8 +16,12 @@ const systemModule: Module<IMainState, IRootState> = {
       roleCount: 0,
       menuList: [],
       menuCount: 0,
+      departmentList: [],
+      departmentCount: 0,
       goodsList: [],
-      goodsCount: 0
+      goodsCount: 0,
+      categoryList: [],
+      categoryCount: 0
     }
   },
   mutations: {
@@ -44,6 +48,18 @@ const systemModule: Module<IMainState, IRootState> = {
     },
     changeMenuCount(state, Count: number) {
       state.menuCount = Count
+    },
+    changeDepartmentList(state, List: any[]) {
+      state.departmentList = List
+    },
+    changeDepartmentCount(state, Count: number) {
+      state.departmentCount = Count
+    },
+    changeCategoryList(state, List: any[]) {
+      state.categoryList = List
+    },
+    changeCategoryCount(state, Count: number) {
+      state.categoryCount = Count
     }
   },
   getters: {
@@ -58,6 +74,10 @@ const systemModule: Module<IMainState, IRootState> = {
             return state.goodsList
           case 'menu':
             return state.menuList
+          case 'category':
+            return state.categoryList
+          case 'department':
+            return state.departmentList
         }
       }
     },
@@ -72,11 +92,12 @@ const systemModule: Module<IMainState, IRootState> = {
     async getPageListAction({ commit }, payload: any) {
       // 处理数据
       const pageName = payload.pageName
+
       const pageUrl = `${pageName}/list`
 
       // 发送请求
       const pageResult = await getPageListData(pageUrl, payload.queryInfo)
-      // console.log(pageResult)
+      console.log(pageResult, '请求到的数据')
 
       // 将数据存储到 state 中
       const { list, totalCount } = pageResult.data

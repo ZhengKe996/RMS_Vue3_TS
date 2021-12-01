@@ -50,6 +50,7 @@ const store = createStore<IRootState>({
   }
 })
 export function setupStore() {
+  // 页面重新载入时，调用
   store.dispatch('loginModule/loadLocalLogin')
 }
 /**

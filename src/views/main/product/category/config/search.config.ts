@@ -5,14 +5,8 @@ export const searchFormConfig: IForm = {
     {
       field: 'name',
       type: 'input',
-      label: '角色名',
-      placeholder: '请输入角色'
-    },
-    {
-      field: 'intro',
-      type: 'input',
-      label: '角色权限',
-      placeholder: '请输入角色权限'
+      label: '类别名称',
+      placeholder: '请输入类别'
     },
     {
       field: 'createTime',

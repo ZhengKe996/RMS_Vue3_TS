@@ -4,7 +4,7 @@
       <span class="el-dropdown-link">
         <span class="name">CoCo</span>
         <!-- <span class="name">{{ name }}</span> -->
-        <el-avatar size="small" src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar>
+        <el-avatar size="small" :src="require('@/assets/img/head.jpeg')"></el-avatar>
       </span>
       <template #dropdown>
         <el-dropdown-menu>

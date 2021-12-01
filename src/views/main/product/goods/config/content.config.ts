@@ -4,8 +4,8 @@ export const contentTableConfig: any = {
   showSelectColumn: true,
   propList: [
     { prop: 'name', label: '商品名称', minWidth: '80' },
-    { prop: 'oldPrice', label: '原价', minWidth: '80' },
-    { prop: 'newPrice', label: '现价', minWidth: '100' },
+    { prop: 'oldPrice', label: '原价', minWidth: '60' },
+    { prop: 'newPrice', label: '现价', minWidth: '60' },
     { prop: 'imgUrl', label: '商品图片', minWidth: '100', slotName: 'image' },
     { prop: 'status', label: '商品状态', minWidth: '100', slotName: 'status' },
     { prop: 'address', label: '发货地', minWidth: '80' },

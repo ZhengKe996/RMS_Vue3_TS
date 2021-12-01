@@ -65,9 +65,9 @@ class OWNRequest {
          * 例子：
          *  可采用 switch 对 HttpErrorCode 进行判断，返回对应的错误信息
          * */
-        if (error.response.status === 404) {
-          console.log('404 页面未找到！')
-        }
+        // if (error.response.status === 404) {
+        //   console.log('404 页面未找到！')
+        // }
         return error
       }
     )

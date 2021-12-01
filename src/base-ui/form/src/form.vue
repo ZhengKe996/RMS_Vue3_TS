@@ -100,6 +100,7 @@ export default defineComponent({
       },
       { deep: true }
     ) */
+    // 两种方法都不会违反单向数据流
     const handleValueChange = (value: any, field: string) => {
       emit('update:modelValue', { ...props.modelValue, [field]: value })
     }

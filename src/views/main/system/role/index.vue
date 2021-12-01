@@ -1,8 +1,13 @@
 <template>
   <div class="role">
-    <page-search :searchFormConfig="searchFormConfig" />
+    <page-search
+      :searchFormConfig="searchFormConfig"
+      @resetBtnClick="handleResetClick"
+      @queryBtnClick="handleQueryClick"
+    />
     <page-content
       :contentTableConfig="contentTableConfig"
+      ref="pageContentRef"
       @newBtnClick="handleNewData"
       @editBtnClick="handleEditData"
       pageName="role"
@@ -38,7 +43,7 @@ import PageModal from '@/components/page-modal'
 import { contentTableConfig } from './config/content.config'
 import { searchFormConfig } from './config/search.config'
 import { modalConfig } from './config/modal.config'
-
+import { usePageSearch } from '@/hooks/usePageSearch'
 import { usePageModal } from '@/hooks/usePageModal'
 
 import { mapMenuLeafKeys } from '@/utils/map-menus'
@@ -49,6 +54,7 @@ export default defineComponent({
   name: 'role',
   setup() {
     const store = useStore()
+
     // 解决 点击编辑时，ElTree组件无法回显
     const elTreeRef = ref<InstanceType<typeof ElTree>>()
     const editCallBack = (item: any) => {
@@ -57,7 +63,6 @@ export default defineComponent({
         elTreeRef.value?.setCheckedKeys(leafKeys, false)
       })
     }
-    const [defaultInfo, pageModalRef, handleNewData, handleEditData] = usePageModal(undefined, editCallBack)
 
     const menus = computed(() => store.state.entireMenu)
     const otherInfo = ref({})
@@ -67,6 +72,10 @@ export default defineComponent({
       const menuList = [...checkedKeys, ...halfCheckedKeys]
       otherInfo.value = { menuList: menuList }
     }
+
+    const [pageContentRef, handleResetClick, handleQueryClick] = usePageSearch()
+
+    const [defaultInfo, pageModalRef, handleNewData, handleEditData] = usePageModal(undefined, editCallBack)
 
     return {
       contentTableConfig,
@@ -79,7 +88,10 @@ export default defineComponent({
       menus,
       otherInfo,
       handleCheckChange,
-      elTreeRef
+      elTreeRef,
+      pageContentRef,
+      handleResetClick,
+      handleQueryClick
     }
   },
   components: {

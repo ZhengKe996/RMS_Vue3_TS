@@ -35,7 +35,6 @@ const loginModule: Module<ILoginState, IRootState> = {
       state.userMenus = userMenus
       // userMenus => routes
       const routes = mapMenusToRoutes(userMenus)
-
       // 将 routes => router.main.children
       routes.forEach((route) => {
         router.addRoute('main', route)
@@ -47,17 +46,14 @@ const loginModule: Module<ILoginState, IRootState> = {
   },
   getters: {},
   actions: {
-    // 登录逻辑
     async accountLoginAction({ commit, dispatch }, payload: IAccount) {
+      // 发生登录的网络请求
       const loginResult = await accountLoginRequest(payload)
       // console.log(loginResult) // 0 ok  400 no
 
       const { id, token } = loginResult.data
       commit('changeToken', token)
       loaclCache.setCache('token', token)
-
-      // 发生初始化的网络请求（完整的角色role/部门department）调用根写法
-      dispatch('getInitialDataAction', null, { root: true })
 
       // 请求用户信息
       const userInfoResult = await requestUserInfoById(id)
@@ -75,8 +71,12 @@ const loginModule: Module<ILoginState, IRootState> = {
 
       // 跳转到首页
       router.push('/main')
+
+      // 发生初始化的网络请求（完整的角色role/部门department）调用根写法
+      dispatch('getInitialDataAction', null, { root: true })
     },
     loadLocalLogin({ commit, dispatch }) {
+      // 从本地读取token
       const token: string = loaclCache.getCache('token')
       if (token) {
         commit('changeToken', token)

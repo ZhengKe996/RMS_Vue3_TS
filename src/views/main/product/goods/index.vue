@@ -1,6 +1,17 @@
 <template>
   <div class="goods">
-    <page-content :contentTableConfig="contentTableConfig" pageName="goods">
+    <page-search
+      :searchFormConfig="searchFormConfig"
+      @resetBtnClick="handleResetClick"
+      @queryBtnClick="handleQueryClick"
+    />
+    <page-content
+      ref="pageContentRef"
+      :contentTableConfig="contentTableConfig"
+      @newBtnClick="handleNewData"
+      @editBtnClick="handleEditData"
+      pageName="goods"
+    >
       <template #image="scope">
         <el-image style="width: 60px; height: 80px" :src="scope.row.imgUrl" :preview-src-list="[scope.row.imgUrl]">
         </el-image>
@@ -11,21 +22,22 @@
         </el-button>
       </template>
     </page-content>
+    <page-modal ref="pageModalRef" pageName="goods" :defaultInfo="defaultInfo" :modalConfig="modalConfig" />
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
+<script setup lang="ts">
 import PageContent from '@/components/page-content'
+import PageSearch from '@/components/page-search'
+import PageModal from '@/components/page-modal'
 import { contentTableConfig } from './config/content.config'
+import { searchFormConfig } from './config/search.config'
+import { modalConfig } from './config/modal.config'
+import { usePageSearch } from '@/hooks/usePageSearch'
+import { usePageModal } from '@/hooks/usePageModal'
 
-export default defineComponent({
-  name: 'goods',
-  setup() {
-    return { contentTableConfig }
-  },
-  components: { PageContent }
-})
+const [pageContentRef, handleResetClick, handleQueryClick] = usePageSearch()
+const [defaultInfo, pageModalRef, handleNewData, handleEditData] = usePageModal()
 </script>
 
 <style scoped></style>

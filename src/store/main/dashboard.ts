@@ -7,7 +7,7 @@ import {
   getCategoryGoodsFavor,
   getCategoryGoodsSale,
   getAddressGoodsSale
-} from '@/service/main/dashboard'
+} from '@/service/main/analysis'
 
 const dashboardModule: Module<IDashboardState, IRootState> = {
   namespaced: true,
