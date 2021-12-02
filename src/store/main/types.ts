@@ -20,4 +20,5 @@ export interface IDashboardState {
   categoryGoodsSale: any[]
   categoryGoodsFavor: any[]
   addressGoodsSale: any[]
+  topPanelDatas: any[]
 }

@@ -2,10 +2,17 @@ import ownRequest from '../index'
 import type { IDataType } from '@/service/types'
 
 enum DashboardAPI {
+  amountList = '/goods/amount/list',
   categoryGoodsCount = '/goods/category/count',
   categoryGoodsFavor = '/goods/category/favor',
   categoryGoodsSale = '/goods/category/sale',
   addressGoodsSale = '/goods/address/sale'
+}
+
+export function getAmountList() {
+  return ownRequest.get<IDataType>({
+    url: DashboardAPI.amountList
+  })
 }
 
 export function getCategoryGoodsCount() {

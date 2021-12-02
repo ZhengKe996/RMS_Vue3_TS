@@ -1,6 +1,13 @@
 <template>
   <div class="dashboard">
     <el-row :gutter="12">
+      <template v-for="item in topPanelDatas" :key="item.title">
+        <el-col :md="12" :lg="6" :xl="6">
+          <statistical-panel :panelData="item" />
+        </el-col>
+      </template>
+    </el-row>
+    <el-row :gutter="12">
       <el-col :span="7">
         <own-card title="分类商品数量">
           <pie-echart :pieData="categoryGoodsCount"></pie-echart>
@@ -37,9 +44,12 @@ import { computed } from 'vue'
 import { useStore } from '@/store'
 import ownCard from '@/base-ui/card'
 import { PieEchart, BarEchart, LineEchart, MapEchart, RoseEchart } from '@/components/page-echarts'
+import StatisticalPanel from '@/components/statistical-panel'
 
 const store = useStore()
 store.dispatch('dashboardModule/getDashboardDataAction')
+
+const topPanelDatas = computed(() => store.state.dashboardModule.topPanelDatas)
 
 const categoryGoodsCount = computed(() =>
   store.state.dashboardModule.categoryGoodsCount.map((item: any) => {
@@ -79,7 +89,11 @@ const addressGoodsSale = computed(() =>
 </script>
 
 <style lang="less" scoped>
-.content-row {
-  margin-top: 15px;
+.dashboard {
+  background-color: #f5f5f5;
+
+  .content-row {
+    margin-top: 20px;
+  }
 }
 </style>
